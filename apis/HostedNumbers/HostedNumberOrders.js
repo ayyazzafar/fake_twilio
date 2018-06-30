@@ -2,6 +2,7 @@ var passport = require('passport');
 var passportHttp = require('passport-http');
 var express = require('express');
 var router = express.Router();
+const request = require('request');
 passport.use(new passportHttp.BasicStrategy(
     function(userid, password, done) {
 
@@ -11,6 +12,12 @@ passport.use(new passportHttp.BasicStrategy(
 
 
 router.post('/',  passport.authenticate('basic', { session: false }), function (req, res) {
+
+
+    if(req.body.StatusCallbackUrl){
+        notifyToCallbackUrl('twilio-processing', 'HR2329fff8ec855b82faff1e5f4c0a078d', req.body.PhoneNumber,req.body.StatusCallbackUrl);
+    }
+
 
    console.log('user is'); console.log(req.user);
 
@@ -99,3 +106,9 @@ router.post('/',  passport.authenticate('basic', { session: false }), function (
 
 
 module.exports = router;
+
+function notifyToCallbackUrl(Status, HostedNumberOrderSid, PhoneNumber, StatusCallbackUrl){
+
+    request.post(StatusCallbackUrl).form({Status, HostedNumberOrderSid, PhoneNumber, StatusCallbackUrl});
+
+}
