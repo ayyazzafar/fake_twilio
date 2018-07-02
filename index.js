@@ -1,6 +1,7 @@
 const express = require('express')
 const index = express()
 var bodyParser = require('body-parser');
+require('dotenv').config();
 
 index.use(bodyParser.json());
 index.use(bodyParser.urlencoded({ extended: false }));
