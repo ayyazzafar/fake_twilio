@@ -1,3 +1,5 @@
+const request = require('request')
+
 module.exports = function proveOwnershipWithPhoneCall(req, res) {
 
 
@@ -5,13 +7,15 @@ module.exports = function proveOwnershipWithPhoneCall(req, res) {
     console.log(req.user);
 
     if (!req.headers.authorization) {
-        return res.send({
+        res.send({
             "code": 20003,
             "detail": "Your AccountSid or AuthToken was incorrect.",
             "message": "Authentication Error - No credentials provided",
             "more_info": "https://www.twilio.com/docs/errors/20003",
             "status": 401
         });
+    } else {
+
     }
     res.send(
         {
@@ -31,7 +35,7 @@ module.exports = function proveOwnershipWithPhoneCall(req, res) {
             },
             "sid": "000000000000000000000000000011111000000001",
             "email": null,
-            "phone_number": "+13128077390",
+            "phone_number": req.body.phone_number,
             "address_sid": null,
             "call_delay": 0,
             "signing_document_sid": null,
@@ -45,6 +49,24 @@ module.exports = function proveOwnershipWithPhoneCall(req, res) {
             "account_sid": req.user,
             "date_created": "2018-06-30T00:43:58Z"
         });
+
+    notifyToCallbackUrl('pending-verification', 'HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', req.body.PhoneNumber, 'http://localhost:3100/v2/api/numbers/hosted/statusCallback');
+
+
+    setTimeout(() => {
+        notifyToCallbackUrl('verified', 'HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', req.body.phone_number, 'http://localhost:3100/v2/api/numbers/hosted/statusCallback');
+    }, 4000);
+
 }
 
-1
+
+function notifyToCallbackUrl(Status, HostedNumberOrderSid, PhoneNumber, StatusCallbackUrl) {
+
+    request.post({
+        url: StatusCallbackUrl,
+        form: {Status, HostedNumberOrderSid, PhoneNumber, StatusCallbackUrl}
+    }, function (err, httpResponse, body) {
+        console.log(err);
+    });
+
+}

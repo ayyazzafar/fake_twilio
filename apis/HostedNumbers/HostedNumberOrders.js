@@ -18,7 +18,7 @@ passport.use(new passportHttp.BasicStrategy(
 
 router.post('/',  passport.authenticate('basic', { session: false }), function (req, res) {
 
-    create(req, resp);
+    create(req, res);
 
 });
 
@@ -34,6 +34,17 @@ router.post('/:HostedNumberOrderSid', passport.authenticate('basic', {session: f
 });
 
 router.get('/:HostedNumberOrderSid*?', passport.authenticate('basic', {session: false}), function (req, res) {
+
+    if (req.params.HostedNumberOrderSid) {
+        get(req, res);
+    } else {
+        getAll(req, res);
+    }
+
+
+});
+
+router.get('/:AuthorizationDocuments', passport.authenticate('basic', {session: false}), function (req, res) {
 
     if (req.params.HostedNumberOrderSid) {
         get(req, res);
