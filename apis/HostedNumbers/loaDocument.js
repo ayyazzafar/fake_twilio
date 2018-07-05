@@ -1,4 +1,4 @@
-module.exports = function fetchHostedNumberOrder(req, res, HostedNumberOrderSid) {
+module.exports = function loaDocument(req, res) {
 
     if (!req.headers.authorization) {
         return res.send({
@@ -17,7 +17,7 @@ module.exports = function fetchHostedNumberOrder(req, res, HostedNumberOrderSid)
             "date_updated": "2017-10-16T23:54:59Z",
             "cc_emails": req.body.CcEmails.split('&'),
             "url": process.env.BASE_URL + "/HostedNumbers/AuthorizationDocuments/PX5b7889b420ec6bca465c068f5bc2b67e",
-            "address_sid": "AD1e20d20a7772e157c8ddbaba36aefef0",
+            "address_sid": req.body.AddressSid,
             "sid": "PX5b7889b420ec6bca465c068f5bc2b67e",
             "date_created": "2017-10-16T23:54:58Z",
             "email": req.body.Email

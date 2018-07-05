@@ -44,16 +44,6 @@ router.get('/:HostedNumberOrderSid*?', passport.authenticate('basic', {session: 
 
 });
 
-router.get('/:AuthorizationDocuments', passport.authenticate('basic', {session: false}), function (req, res) {
-
-    if (req.params.HostedNumberOrderSid) {
-        get(req, res);
-    } else {
-        getAll(req, res);
-    }
-
-
-});
 
 
 module.exports = router;

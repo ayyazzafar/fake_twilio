@@ -6,5 +6,6 @@ require('dotenv').config();
 index.use(bodyParser.json());
 index.use(bodyParser.urlencoded({ extended: false }));
 index.use('/HostedNumbers/HostedNumberOrders/', require('./apis/HostedNumbers/HostedNumberOrders'));
+index.use('/HostedNumbers/AuthorizationDocuments/', require('./apis/HostedNumbers/authorizationDocument'));
 
 index.listen(3000, () => console.log('Example app listening on port 3000!'))
