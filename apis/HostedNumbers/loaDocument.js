@@ -1,3 +1,5 @@
+const request = require('request');
+
 module.exports = function loaDocument(req, res) {
 
     if (!req.headers.authorization) {
