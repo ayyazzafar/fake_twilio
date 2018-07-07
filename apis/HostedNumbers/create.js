@@ -72,7 +72,7 @@ module.exports = function create(req, res) {
                 "phone_number": req.body.PhoneNumber,
                 "sid": "HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                 "signing_document_sid": "PXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-                "status": "received",
+                "status": "twilio-processing",
                 "unique_name": null,
                 "url": "https://preview.twilio.com/HostedNumbers/HostedNumberOrders/HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                 "verification_attempts": 0,
@@ -86,7 +86,7 @@ module.exports = function create(req, res) {
 
 
     if (req.body.StatusCallbackUrl) {
-        notifyToCallbackUrl('twilio-processing', 'HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', req.body.PhoneNumber, 'http://localhost:3100');
+        notifyToCallbackUrl('received', 'HRXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', req.body.PhoneNumber, 'https://preview.twilio.com');
     }
 }
 
